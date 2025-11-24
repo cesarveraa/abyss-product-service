@@ -1,0 +1,251 @@
+{
+  "info": {
+    "name": "Product Service",
+    "_postman_id": "abc12345-test",
+    "description": "Colección para probar el microservicio de productos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PRODUCTOS",
+      "item": [
+        {
+          "name": "Crear Producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"codigo_sku\": \"ABC-001\",\n    \"codigo_barra\": \"1234567890123\",\n    \"nombre\": \"Laptop Lenovo\",\n    \"descripcion\": \"Laptop de prueba\",\n    \"stock_minimo_global\": 10,\n    \"estado\": true,\n    \"precio\": 3500.50,\n    \"proveedores_id_proveedor\": 1,\n    \"unidades_medida_id_unidad\": 1,\n    \"categorias_ids\": [1],\n    \"atributos\": [\n        { \"nombre_atributo\": \"Color\", \"valor\": \"Negro\" },\n        { \"nombre_atributo\": \"RAM\", \"valor\": \"16GB\" }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/products",
+              "host": [ "{{BASE_URL}}" ],
+              "path": [ "products" ]
+            }
+          }
+        },
+        {
+          "name": "Listar Productos",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/products",
+              "host": [ "{{BASE_URL}}" ],
+              "path": [ "products" ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Producto por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/products/1",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["products","1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Producto (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Laptop Lenovo Actualizada\",\n  \"stock_minimo_global\": 5,\n  \"categorias_ids\": [1,2]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/products/1",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["products","1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Producto (Soft Delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/products/1",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["products","1"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "PROVEEDORES",
+      "item": [
+        {
+          "name": "Crear Proveedor",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Proveedor Test\",\n  \"contacto\": \"Juan Pérez\",\n  \"telefono\": \"78945612\",\n  \"email\": \"prove@test.com\",\n  \"direccion\": \"Av. Siempre Viva\",\n  \"estado\": true,\n  \"empresas_id_emp\": 1\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/suppliers",
+              "host": [ "{{BASE_URL}}" ],
+              "path": [ "suppliers" ]
+            }
+          }
+        },
+        {
+          "name": "Listar Proveedores",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/suppliers",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["suppliers"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "CATEGORIAS",
+      "item": [
+        {
+          "name": "Crear Categoría",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nombre\": \"Electrónica\", \"descripcion\": \"Dispositivos electrónicos\" }"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/categories",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["categories"]
+            }
+          }
+        },
+        {
+          "name": "Listar Categorías",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/categories",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["categories"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "UNIDADES DE MEDIDA",
+      "item": [
+        {
+          "name": "Crear Unidad",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"codigo\": \"UND\", \"descripcion\": \"Unidad\", \"es_fraccionable\": false }"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/units",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["units"]
+            }
+          }
+        },
+        {
+          "name": "Listar Unidades",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/units",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["units"]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "ATRIBUTOS DE PRODUCTO",
+      "item": [
+        {
+          "name": "Agregar Atributo",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"nombre_atributo\": \"Peso\", \"valor\": \"2kg\" }"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/products/1/attributes",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["products","1","attributes"]
+            }
+          }
+        },
+        {
+          "name": "Listar Atributos",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/products/1/attributes",
+              "host": [ "{{BASE_URL}}" ],
+              "path": ["products","1","attributes"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
