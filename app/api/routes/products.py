@@ -27,16 +27,19 @@ async def create_product(
         raise HTTPException(status_code=400, detail="codigo_sku ya existe")
 
     product = Producto(
-        codigo_sku=payload.codigo_sku,
-        codigo_barra=payload.codigo_barra,
-        nombre=payload.nombre,
-        descripcion=payload.descripcion,
-        stock_minimo_global=payload.stock_minimo_global,
-        estado=payload.estado,
-        precio=payload.precio,
-        proveedores_id_proveedor=payload.proveedores_id_proveedor,
-        unidades_medida_id_unidad=payload.unidades_medida_id_unidad,
-    )
+    codigo_sku=payload.codigo_sku,
+    codigo_barra=payload.codigo_barra,
+    nombre=payload.nombre,
+    descripcion=payload.descripcion,
+    stock_minimo_global=payload.stock_minimo_global,
+    estado=payload.estado,
+    precio=payload.precio,
+    proveedores_id_proveedor=payload.proveedores_id_proveedor,
+    unidades_medida_id_unidad=payload.unidades_medida_id_unidad,
+    empresas_id_empresa=payload.empresas_id_empresa,  
+)
+
+
 
     # categorías
     if payload.categorias_ids:

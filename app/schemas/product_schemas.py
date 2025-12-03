@@ -85,8 +85,6 @@ class ProductoAtributoRead(ProductoAtributoBase):
         from_attributes = True
 
 
-# ---------- Productos ----------
-
 class ProductoBase(BaseModel):
     codigo_sku: str
     codigo_barra: Optional[str] = None
@@ -97,6 +95,7 @@ class ProductoBase(BaseModel):
     precio: Decimal
     proveedores_id_proveedor: int
     unidades_medida_id_unidad: int
+    empresas_id_empresa: int   # 🆕
 
 
 class ProductoCreate(ProductoBase):
@@ -112,6 +111,7 @@ class ProductoUpdate(BaseModel):
     precio: Optional[Decimal] = None
     categorias_ids: Optional[List[int]] = None
     atributos: Optional[List[ProductoAtributoCreate]] = None
+    empresas_id_empresa: Optional[int] = None   # 🆕
 
 
 class ProductoRead(ProductoBase):
