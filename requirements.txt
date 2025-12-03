@@ -19,3 +19,4 @@ python-multipart==0.0.9
 
 # Para logging más pro (opcional)
 loguru==0.7.2
+pydantic[email]
