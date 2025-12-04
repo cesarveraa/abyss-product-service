@@ -1,27 +1,26 @@
+# app/api/deps.py (o donde lo tengas)
 from fastapi import HTTPException, Depends, status, Request
-from fastapi.security import OAuth2PasswordBearer
-from jose import jwt, JWTError
-
+from supabase import Client
 from app.core.config import settings
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+from app.core.supabase_client import get_supabase_client
 
 
 class CurrentUser:
-    def __init__(self, sub: str, role: str | None = None):
-        self.sub = sub
-        self.role = role
+    def __init__(self, sub: str):
+        self.sub = sub  # id del usuario en Supabase (UUID string)
 
 
 def _get_token_from_cookie_or_header(request: Request) -> str | None:
-    # 1) cookie de sesión (Supabase / tu auth)
+    # 1) Cookie (lo que setea el auth-service)
     token = request.cookies.get(settings.COOKIE_NAME)
     if token:
         return token
+
     # 2) Authorization: Bearer
     auth = request.headers.get("Authorization")
     if auth and auth.startswith("Bearer "):
         return auth.split(" ", 1)[1]
+
     return None
 
 
@@ -30,27 +29,26 @@ async def get_current_user(request: Request) -> CurrentUser:
     if not token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="No autenticado",
+            detail="No autenticado (sin token)",
         )
-    try:
-        payload = jwt.decode(
-            token,
-            settings.JWT_SECRET,
-            algorithms=["HS256"],
-        )
-        sub: str | None = payload.get("sub")
-        role: str | None = payload.get("role")
 
-        if sub is None:
+    supabase: Client = get_supabase_client()
+
+    try:
+        user_response = supabase.auth.get_user(token)
+        if not user_response or not user_response.user:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Token inválido",
+                detail="Token inválido (Supabase no devolvió user)",
             )
 
-        return CurrentUser(sub=sub, role=role)
+        user_id = user_response.user.id  # UUID string
+        return CurrentUser(sub=user_id)
 
-    except JWTError:
+    except HTTPException:
+        raise
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="No se pudo validar el token",
+            detail=f"No se pudo validar el token en Supabase: {str(e)}",
         )

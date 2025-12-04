@@ -9,6 +9,8 @@ asyncpg==0.29.0
 # Autenticación
 python-jose==3.3.0
 cryptography==42.0.5
+supabase
+
 
 # Configuración y env
 pydantic==2.7.1
